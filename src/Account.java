@@ -6,12 +6,15 @@
 //********************************************************************
 
 import java.text.NumberFormat;
+import java.util.Date;
 
 public class Account
 {
     int acctNumber;
     double balance;
     String name;
+    Date creationDate;
+    double overdraftLimit;
 
     //-----------------------------------------------------------------
     //  Sets up the account by defining its owner's name and account
@@ -22,6 +25,8 @@ public class Account
         name = x;
         acctNumber = y;
         balance = 0;
+        creationDate = new Date();
+        overdraftLimit = 100;
     }
 
 
@@ -34,6 +39,8 @@ public class Account
         name = x;
         acctNumber = y;
         balance = z;
+        creationDate = new Date();
+        overdraftLimit = 0;
     }
 
     //-----------------------------------------------------------------
@@ -50,8 +57,7 @@ public class Account
     //-----------------------------------------------------------------
     public void withdraw (double x)
     {
-        int fee = 0;
-        withdraw(x, fee);
+        withdraw(x, 0);
     }
 
     //-----------------------------------------------------------------
@@ -60,7 +66,7 @@ public class Account
     //-----------------------------------------------------------------
     public void withdraw (double x, double fee)
     {
-        if (balance > (x + fee) ){
+        if (balance + overdraftLimit > (x + fee) ){
             balance = balance - x - fee;
         } else {
             System.out.println("You have insufficient funds to make this withdrawal");
@@ -74,6 +80,23 @@ public class Account
     public double getBalance ()
     {
         return balance;
+    }
+
+    //-----------------------------------------------------------------
+    //  Set balance to a specified value.
+    //  An additional method to restore balance to a cached value,
+    //  in case of incomplete transaction.
+    //-----------------------------------------------------------------
+    public void setBalance (double value) {
+        balance = value;
+    }
+
+    //-----------------------------------------------------------------
+    //  Returns the creation date of the account
+    //-----------------------------------------------------------------
+    public Date getCreationDate ()
+    {
+        return creationDate;
     }
 
     //-----------------------------------------------------------------

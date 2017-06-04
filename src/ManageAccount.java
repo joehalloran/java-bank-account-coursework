@@ -48,6 +48,10 @@ public class ManageAccount {
         addInterest(cruise, interestRate);
         addInterest(inlandRevenue, interestRate);
 
+        System.out.println("Trump creation date:\t\t" + trump.getCreationDate());
+        System.out.println("Gate creation date:\t\t" + gates.getCreationDate());
+        System.out.println("Cruise creation date:\t\t" + cruise.getCreationDate());
+
     }
 
     public String getTotalDeposits() {
@@ -61,10 +65,20 @@ public class ManageAccount {
     }
 
     public void deductTax(Account citizen, Account taxMan) {
-        double tax = calculateTax(citizen);
-        citizen.withdraw(tax);
-        taxMan.deposit(tax);
-        System.out.println("Tax paid by " + citizen.name + ":\t\t" + toString(tax));
+        double citizenReset = citizen.getBalance();
+        double taxManReset = taxMan.getBalance();
+        try {
+            double tax = calculateTax(citizen);
+            citizen.withdraw(tax);
+            taxMan.deposit(tax);
+            System.out.println("Tax paid by " + citizen.name + ":\t\t" + toString(tax));
+        } catch (Exception e) {
+            System.out.println("Tax payment could not be processed");
+            citizen.setBalance(citizenReset);
+            taxMan.setBalance(taxManReset);
+        }
+
+
     }
 
     public void addInterest(Account account, double interestRate) {
