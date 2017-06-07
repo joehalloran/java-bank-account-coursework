@@ -5,6 +5,7 @@
 //  Represents a bank account with methods deposit and withdraw.
 //********************************************************************
 
+
 import java.text.NumberFormat;
 import java.util.Date;
 
@@ -14,33 +15,34 @@ public class Account
     double balance;
     String name;
     Date creationDate;
-    double overdraftLimit;
+    double overdraftLimit;      // Task 10
 
     //-----------------------------------------------------------------
     //  Sets up the account by defining its owner's name and account
-    //   number only.
+    //  number only.
+    //  Task 6
     //-----------------------------------------------------------------
     public Account (String x, int y)
     {
         name = x;
         acctNumber = y;
         balance = 0;
-        creationDate = new Date();
-        overdraftLimit = 100;
+        creationDate = new Date();      // Task 9
+        overdraftLimit = 100;           // Task 10
     }
 
 
     //-----------------------------------------------------------------
     //  Sets up the account by defining its owner's name, account
-    //   number, and initial balance.
+    //  number, and initial balance.
     //-----------------------------------------------------------------
     public Account (String x, int y, double z)
     {
         name = x;
         acctNumber = y;
         balance = z;
-        creationDate = new Date();
-        overdraftLimit = 0;
+        creationDate = new Date();      // Task 9
+        overdraftLimit = 0;             // Task 10
     }
 
     //-----------------------------------------------------------------
@@ -58,7 +60,7 @@ public class Account
     public void withdraw (double x)
     {
         withdraw(x, 0);
-    }
+    }           // Task 4
 
     //-----------------------------------------------------------------
     //  Withdraws the specified amount from the account and applies
@@ -66,10 +68,10 @@ public class Account
     //-----------------------------------------------------------------
     public void withdraw (double x, double fee)
     {
-        if (balance + overdraftLimit > (x + fee) ){
+        if (balance + overdraftLimit > (x + fee) ){                  // Task 10
             balance = balance - x - fee;
         } else {
-            System.out.println("You have insufficient funds to make this withdrawal");
+            System.out.println("You have insufficient funds to make this withdrawal"); // Task 3
         }
     }
 
@@ -92,7 +94,7 @@ public class Account
     }
 
     //-----------------------------------------------------------------
-    //  Returns the creation date of the account
+    //  Returns the creation date of the account                        // Task 9
     //-----------------------------------------------------------------
     public Date getCreationDate ()
     {

@@ -1,3 +1,39 @@
+# PART II: Bank Account Management
+Joe Halloran
+
+## Sample of test output
+
+```
+   20230715	Donald Trump	£450.00
+   31558040	Bill Gates	£100.00
+   20230715	Donald Trump	£525.00
+   
+   20230715	Donald Trump	£525.00
+   31558040	Bill Gates	£100.00
+   44003050	Tom Cruise	£600.00
+    
+   Total deposits:		£1,225.00
+   
+   Tax paid by Donald Trump:		£78.75
+   Tax paid by Bill Gates:		£15.00
+   Tax paid by Tom Cruise:		£90.00
+   
+   Interest paid to Donald Trump:		£6.69
+   Interest paid to Bill Gates:		£1.27
+   Interest paid to Tom Cruise:		£7.65
+   Interest paid to Inland Revenue:		£2.76
+   
+   Trump creation date:		Tue Jun 06 16:10:50 BST 2017
+   Gate creation date:		Tue Jun 06 16:10:50 BST 2017
+   Cruise creation date:		Tue Jun 06 16:10:50 BST 2017
+   
+   Process finished with exit code 0
+```
+
+## Appendix: Source code listing
+
+### ManageAccount.java
+```java
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
@@ -6,17 +42,17 @@ import java.text.NumberFormat;
  * based on instructions from Task 2: Bank Account Managenment
  */
 public class ManageAccount {
-    // Initialise formators used for cash values
+    // Initialise formators used for cash values 
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
     NumberFormat stringFormat = NumberFormat.getCurrencyInstance();
-
+    
     // Initialise accouts                                       // Task 1.i
     Account trump = new Account("Donald Trump", 20230715, 400);
     Account gates = new Account("Bill Gates", 31558040, 500);
     Account cruise = new Account("Tom Cruise", 44003050, 600);
     Account inlandRevenue = new Account("Inland Revenue", 11223344); // Task 6 - no initial deposit
 
-
+    
     public static void main(String[] args) {
         // create accounts
         ManageAccount accounts = new ManageAccount();
@@ -42,12 +78,12 @@ public class ManageAccount {
 
         System.out.println(" ");                    // Task 2 - total deposits
         System.out.println (getTotalDeposits());
-
+        
         System.out.println();                       // Task 7 - pay taxes
         deductTax(trump, inlandRevenue);
         deductTax(gates, inlandRevenue);
         deductTax(cruise, inlandRevenue);
-
+        
         System.out.println();                       // Task 8 - add interest
         double interestRate = 0.015;
         addInterest(trump, interestRate);
@@ -131,3 +167,121 @@ public class ManageAccount {
     }
 
 }
+
+```
+
+### Account.java
+```java
+//********************************************************************
+//  Account.java       Author: Lewis/Loftus
+//
+//
+//  Represents a bank account with methods deposit and withdraw.
+//********************************************************************
+
+
+import java.text.NumberFormat;
+import java.util.Date;
+
+public class Account
+{
+    int acctNumber;
+    double balance;
+    String name;
+    Date creationDate;
+    double overdraftLimit;      // Task 10
+
+    //-----------------------------------------------------------------
+    //  Sets up the account by defining its owner's name and account
+    //  number only.
+    //  Task 6
+    //-----------------------------------------------------------------
+    public Account (String x, int y)
+    {
+        name = x;
+        acctNumber = y;
+        balance = 0;
+        creationDate = new Date();      // Task 9
+        overdraftLimit = 100;           // Task 10
+    }
+
+
+    //-----------------------------------------------------------------
+    //  Sets up the account by defining its owner's name, account
+    //  number, and initial balance.
+    //-----------------------------------------------------------------
+    public Account (String x, int y, double z)
+    {
+        name = x;
+        acctNumber = y;
+        balance = z;
+        creationDate = new Date();      // Task 9
+        overdraftLimit = 0;             // Task 10
+    }
+
+    //-----------------------------------------------------------------
+    //  Deposits the specified amount x into the account.
+    //-----------------------------------------------------------------
+    public void deposit (double x)
+    {
+        balance = balance + x;
+    }
+
+    //-----------------------------------------------------------------
+    //  Withdraws the specified amount from the account for no fee.
+    //
+    //-----------------------------------------------------------------
+    public void withdraw (double x)
+    {
+        withdraw(x, 0);
+    }           // Task 4
+
+    //-----------------------------------------------------------------
+    //  Withdraws the specified amount from the account and applies
+    //  the fee.
+    //-----------------------------------------------------------------
+    public void withdraw (double x, double fee)
+    {
+        if (balance + overdraftLimit > (x + fee) ){                  // Task 10
+            balance = balance - x - fee;
+        } else {
+            System.out.println("You have insufficient funds to make this withdrawal"); // Task 3
+        }
+    }
+
+
+    //-----------------------------------------------------------------
+    //  Returns the current balance of the account.
+    //-----------------------------------------------------------------
+    public double getBalance ()
+    {
+        return balance;
+    }
+
+    //-----------------------------------------------------------------
+    //  Set balance to a specified value.
+    //  An additional method to restore balance to a cached value,
+    //  in case of incomplete transaction.
+    //-----------------------------------------------------------------
+    public void setBalance (double value) {
+        balance = value;
+    }
+
+    //-----------------------------------------------------------------
+    //  Returns the creation date of the account                        // Task 9
+    //-----------------------------------------------------------------
+    public Date getCreationDate ()
+    {
+        return creationDate;
+    }
+
+    //-----------------------------------------------------------------
+    //  Returns a one-line description of the account as a string.
+    //-----------------------------------------------------------------
+    public String toString ()
+    {
+        NumberFormat fmt = NumberFormat.getCurrencyInstance();
+        return (acctNumber + "\t" + name + "\t" + fmt.format(balance));
+    }
+}
+```
