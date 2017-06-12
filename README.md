@@ -1,4 +1,5 @@
-# PART II: Bank Account Management
+# Programming Coursework
+## PART II: Bank Account Management
 Joe Halloran
 
 ## Sample of test output
@@ -7,28 +8,29 @@ Joe Halloran
    20230715	Donald Trump	£450.00
    31558040	Bill Gates	£100.00
    20230715	Donald Trump	£525.00
-   
+
    20230715	Donald Trump	£525.00
    31558040	Bill Gates	£100.00
    44003050	Tom Cruise	£600.00
-    
+
    Total deposits:		£1,225.00
-   
+
    Tax paid by Donald Trump:		£78.75
    Tax paid by Bill Gates:		£15.00
    Tax paid by Tom Cruise:		£90.00
-   
+
    Interest paid to Donald Trump:		£6.69
    Interest paid to Bill Gates:		£1.27
    Interest paid to Tom Cruise:		£7.65
    Interest paid to Inland Revenue:		£2.76
-   
+
    Trump creation date:		Tue Jun 06 16:10:50 BST 2017
    Gate creation date:		Tue Jun 06 16:10:50 BST 2017
    Cruise creation date:		Tue Jun 06 16:10:50 BST 2017
-   
+
    Process finished with exit code 0
 ```
+<div style="page-break-after: always;"></div>
 
 ## Appendix: Source code listing
 
@@ -42,17 +44,17 @@ import java.text.NumberFormat;
  * based on instructions from Task 2: Bank Account Managenment
  */
 public class ManageAccount {
-    // Initialise formators used for cash values 
+    // Initialise formators used for cash values
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
     NumberFormat stringFormat = NumberFormat.getCurrencyInstance();
-    
+
     // Initialise accouts                                       // Task 1.i
     Account trump = new Account("Donald Trump", 20230715, 400);
     Account gates = new Account("Bill Gates", 31558040, 500);
     Account cruise = new Account("Tom Cruise", 44003050, 600);
     Account inlandRevenue = new Account("Inland Revenue", 11223344); // Task 6 - no initial deposit
 
-    
+
     public static void main(String[] args) {
         // create accounts
         ManageAccount accounts = new ManageAccount();
@@ -78,12 +80,12 @@ public class ManageAccount {
 
         System.out.println(" ");                    // Task 2 - total deposits
         System.out.println (getTotalDeposits());
-        
+
         System.out.println();                       // Task 7 - pay taxes
         deductTax(trump, inlandRevenue);
         deductTax(gates, inlandRevenue);
         deductTax(cruise, inlandRevenue);
-        
+
         System.out.println();                       // Task 8 - add interest
         double interestRate = 0.015;
         addInterest(trump, interestRate);
@@ -103,7 +105,7 @@ public class ManageAccount {
     //  Task 2
     //-----------------------------------------------------------------
     public String getTotalDeposits() {
-        double total = trump.getBalance() +  gates.getBalance() + cruise.getBalance();
+        double total = trump.getBalanc<div style="page-break-after: always;"></div>e() +  gates.getBalance() + cruise.getBalance();
         return "Total deposits:\t\t" + toString(total);
     }
 
