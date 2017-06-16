@@ -105,7 +105,7 @@ public class ManageAccount {
     //  Task 2
     //-----------------------------------------------------------------
     public String getTotalDeposits() {
-        double total = trump.getBalanc<div style="page-break-after: always;"></div>e() +  gates.getBalance() + cruise.getBalance();
+        double total = trump.getBalance() +  gates.getBalance() + cruise.getBalance();
         return "Total deposits:\t\t" + toString(total);
     }
 
